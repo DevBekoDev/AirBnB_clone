@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines the HBnB console."""
 import cmd
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
