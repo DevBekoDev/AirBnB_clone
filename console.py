@@ -1,16 +1,10 @@
 #!/usr/bin/python3
 """Defines the HBnB console."""
 import cmd
-<<<<<<< HEAD
-class HBNBCommand(cmd.Cmd):
-     """Defines the HolbertonBnB command interpreter.
-=======
-from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
     """Defines the HolbertonBnB command interpreter.
->>>>>>> f6e0ef6f7231cc75b11464e553af4c2efb5ca740
 
     Attributes:
         prompt (str): The command prompt.
