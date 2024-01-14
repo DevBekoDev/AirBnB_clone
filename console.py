@@ -16,6 +16,16 @@ class HBNBCommand(cmd.Cmd):
         prompt (str): The command prompt.
     """
     prompt = "(hbnb) "
+    prompt = "(hbnb) "
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Place",
+        "Amenity",
+        "Review"
+    }
 
     def do_quit(self, arg):
         """Quit command to exit the program."""
@@ -37,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
         argtemp = parse(arg)
         if len(argtemp) == 0:
             print("** class name missing **")
-        elif argtemp[0] != "BaseModel":
+        elif argtemp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
             print(eval(argtemp[0])().id)
@@ -51,7 +61,7 @@ class HBNBCommand(cmd.Cmd):
         objdict = storage.all()
         if len(argtemp) == 0:
             print("** class name missing **")
-        elif argtemp[0] != "BaseModel":
+        elif argtemp[0] not in HBNBCommand.__classes:
             print("{}".format(argtemp[0]))
             print("** class doesn't exist **")
         elif len(argtemp) == 1:
@@ -68,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
         argtemp = parse(arg)
         if len(argtemp) == 0:
             print("** class name missing **")
-        elif argtemp[0] != "BaseModel":
+        elif argtemp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         elif len(argtemp) == 1:
             print("** instance id missing **")
@@ -83,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
         Display string representations of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
         argtemp = parse(arg)
-        if len(argtemp) > 0 and argtemp[0] != "BaseModel":
+        if len(argtemp) > 0 and argtemp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         else:
             objl = []
