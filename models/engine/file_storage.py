@@ -10,10 +10,9 @@ import json
 from json.decoder import JSONDecodeError
 from datetime import datetime
 import sys
-
-sys.path.append('/root/AirBnB_clone/')
-#from models.base_model import BaseModel
 import models
+sys.path.append('/root/AirBnB_clone/')
+
 
 class FileStorage:
     """

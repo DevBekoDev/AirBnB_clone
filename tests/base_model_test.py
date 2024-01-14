@@ -11,9 +11,8 @@ import unittest
 from time import sleep
 from datetime import datetime
 import sys
-
-sys.path.append('/root/AirBnB_clone/')
 from models.base_model import BaseModel
+sys.path.append('/root/AirBnB_clone/')
 
 
 class TestBaseModel(unittest.TestCase):
@@ -42,7 +41,7 @@ class TestBaseModel(unittest.TestCase):
         check datetime format
         """
         pass
-    
+
     def testting_datetime(self):
         """
         check datetime format

@@ -6,13 +6,9 @@ Base Model For Airbnb
 from uuid import uuid4
 from datetime import datetime
 import sys
-
-sys.path.append('/root/AirBnB_clone/')
 import models
-#from engine import file_storage
 from models.engine.file_storage import FileStorage
-#import engine.file_storage
-
+sys.path.append('/root/AirBnB_clone/')
 
 
 class BaseModel:

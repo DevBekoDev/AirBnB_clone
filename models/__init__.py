@@ -4,9 +4,9 @@ Initializes the module variables
 """
 
 import sys
-
-sys.path.append('/root/AirBnB_clone/')
 from models.engine.file_storage import FileStorage
+sys.path.append('/root/AirBnB_clone/')
+
 
 storage = FileStorage()
 storage.reload()
