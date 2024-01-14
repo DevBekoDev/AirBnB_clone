@@ -12,11 +12,11 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
-    def to_quit(self, arg):
+    def do_quit(self, arg):
         """Quit command to exit the program."""
         return True
 
-    def to_EOF(self, arg):
+    def do_EOF(self, arg):
         """EOF signal to exit the prgram."""
         print("")
         return True
@@ -132,5 +132,5 @@ class HBNBCommand(cmd.Cmd):
                     obj.__dict__[k] = v
         storage.save()
 
-    if __name__ == "__main__":
-        HBNBCommand().cmdloop()
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
