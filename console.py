@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Defines the HBnB console."""
 import cmd
+from models.base_model import BaseModel
 
 
 class HBNBCommand(cmd.Cmd):
@@ -43,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         objdict = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
-        elif arg[0] not in HBNBCommand.BaseModel:
+        elif arg[0] is not BaseModel:
             print("** class doesn't exist **")
         elif len(arg) == 1:
             print("** instance id missing **")
@@ -58,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         objdict = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
-        elif arg[0] not in BaseModel:
+        elif arg[0] is not BaseModel:
             print("** class doesn't exist **")
         elif len(arg) == 1:
             print("** instance id missing **")
@@ -72,7 +73,7 @@ class HBNBCommand(cmd.Cmd):
         """Usage: all or all <class> or <class>.all()
         Display string representations of all instances of a given class.
         If no class is specified, displays all instantiated objects."""
-        if len(arg) > 0 and arg[0] not in BaseModel:
+        if len(arg) > 0 and arg[0] is not BaseModel:
             print("** class doesn't exist **")
         else:
             objl = []
@@ -94,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
             return False
-        if arg[0] not in BaseModel:
+        if arg[0] is not BaseModel:
             print("** class doesn't exist **")
             return False
         if len(arg) == 1:
