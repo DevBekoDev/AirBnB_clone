@@ -4,6 +4,7 @@ import cmd
 from models.base_model import BaseModel
 from models import storage
 from shlex import split
+from models.user import User
 
 
 def parse(arg):
@@ -28,7 +29,7 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def do_quit(self, arg):
-        """Quit command to exit the program."""
+        """Quit command to e:wqxit the program."""
         return True
 
     def do_EOF(self, arg):
@@ -116,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
         if len(argtemp) == 0:
             print("** class name missing **")
             return False
-        if argtemp[0] != "BaseModel":
+        if argtemp[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return False
         if len(argtemp) == 1:
