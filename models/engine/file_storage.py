@@ -10,6 +10,7 @@ import json
 from json.decoder import JSONDecodeError
 from datetime import datetime
 import sys
+import os
 import models
 sys.path.append('/root/AirBnB_clone/')
 
@@ -48,24 +49,23 @@ class FileStorage:
         serializes objects and store in json file
         """
 
-        serialized = {}
-        for key, value in self.__objects.items():
-            serialized[key] = value.to_dict
-
-        with open(self.__file_path, "w") as f:
-            f.write(json.dumps(serialized))
-
+        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
+            d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
+            json.dump(d, f)
+    
     def reload(self):
         """
         deserializing json file to objects
         """
 
         try:
-            deserialized = {}
-            with open(self.__file_path, "r") as f:
-                deserialized = json.loads(f.read())
-            for key, vlaue in deserialized.items:
-                self.__objects[key] = eval(obj["__class__"])(**obj)
-        except (FileNotFoundError, JSONDecodeError):
-            # Noo error handiling required
+            with open(self.__file_path, 'r') as f:
+                data_dict = json.loads(f.read())
+                for value in data_dict.values():
+                    cls_name = value.get("__class__")
+                    if cls_name:
+                        cls = eval(cls_name)
+                        instance = cls(**value)
+                        self.new(instance)
+        except Exception as e:
             pass
