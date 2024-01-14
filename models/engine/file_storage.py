@@ -8,6 +8,7 @@ deserializes JSON file to instances
 
 from models.base_model import BaseModel
 import json
+from models.user import User
 
 
 class FileStorage:
