@@ -3,7 +3,10 @@
 Initializes the module variables
 """
 
-from models.file_storage import FileStorage
+import sys
+
+sys.path.append('/root/AirBnB_clone/')
+from models.engine.file_storage import FileStorage
 
 storage = FileStorage()
 storage.reload()

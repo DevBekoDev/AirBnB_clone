@@ -3,9 +3,16 @@
 Base Model For Airbnb
 """
 
-import uuid
+from uuid import uuid4
 from datetime import datetime
+import sys
+
+sys.path.append('/root/AirBnB_clone/')
 import models
+#from engine import file_storage
+from engine.file_storage import FileStorage
+
+
 
 
 class BaseModel:
@@ -22,7 +29,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
-            models.storage.new(self)
+            FileStorage.new(self)
             return
         if 'id' not in kwargs:
             kwargs['id'] = str(uuid4())

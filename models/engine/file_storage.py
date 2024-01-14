@@ -9,8 +9,11 @@ deserializes JSON file to instances
 import json
 from json.decoder import JSONDecodeError
 from datetime import datetime
-from models.base_model import BaseModel
+import sys
 
+sys.path.append('/root/AirBnB_clone/')
+#from models.base_model import BaseModel
+import models
 
 class FileStorage:
     """
@@ -20,7 +23,7 @@ class FileStorage:
     """
 
     __objects = {}
-    __file_path: 'file.json'
+    __file_path = 'file.json'
 
     def __init__(self):
         """
@@ -33,11 +36,13 @@ class FileStorage:
         returns objects stored
         """
 
-        return FileStorage.__objects
+        return self.__objects
 
     def new(self, obj):
-        key = "{}.{}".format(type(obj).__name__, obj.id)
-        FileStorage.__objects[key] = obj
+        """
+        sets objects
+        """
+        self.__objects[obj.__class__.__name__ + '.' + str(obj)] = obj
 
     def save(self):
         """
@@ -48,7 +53,7 @@ class FileStorage:
         for key, value in self.__objects.items():
             serialized[key] = value.to_dict
 
-        with open(FileStorage.__file_path, "w") as f:
+        with open(self.__file_path, "w") as f:
             f.write(json.dumps(serialized))
 
     def reload(self):
@@ -58,10 +63,10 @@ class FileStorage:
 
         try:
             deserialized = {}
-            with open(FileStorage.__file_path, "r") as f:
+            with open(self.__file_path, "r") as f:
                 deserialized = json.loads(f.read())
             for key, vlaue in deserialized.items:
-                FileStorage.__objects[key] = eval(obj["__class__"])(**obj)
-            except (FileNotFoundError, JSONDecodeError):
-                # Noo error handiling required
-                pass
+                self.__objects[key] = eval(obj["__class__"])(**obj)
+        except (FileNotFoundError, JSONDecodeError):
+            # Noo error handiling required
+            pass
