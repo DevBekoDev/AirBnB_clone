@@ -6,6 +6,7 @@ deserializes JSON file to instances
 """
 
 
+from models.base_model import BaseModel
 import json
 from json.decoder import JSONDecodeError
 from datetime import datetime
@@ -58,15 +59,12 @@ class FileStorage:
         """
         deserializing json file to objects
         """
-
         try:
-            with open(self.__file_path, 'r') as f:
-                data_dict = json.loads(f.read())
-                for value in data_dict.values():
-                    cls_name = value.get("__class__")
-                    if cls_name:
-                        cls = eval(cls_name)
-                        instance = cls(**value)
-                        self.new(instance)
-        except Exception as e:
-            pass
+            with open(FileStorage.__file_path) as f:
+                objdict = json.load(f)
+                for o in objdict.values():
+                    cls_name = o["__class__"]
+                    del o["__class__"]
+                    self.new(eval(cls_name)(**o))
+        except FileNotFoundError:
+            return

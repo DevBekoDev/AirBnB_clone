@@ -7,7 +7,6 @@ from uuid import uuid4
 from datetime import datetime
 import sys
 import models
-from models.engine.file_storage import FileStorage
 sys.path.append('/root/AirBnB_clone/')
 
 
