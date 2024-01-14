@@ -10,8 +10,8 @@ import sys
 sys.path.append('/root/AirBnB_clone/')
 import models
 #from engine import file_storage
-from engine.file_storage import FileStorage
-
+from models.engine.file_storage import FileStorage
+#import engine.file_storage
 
 
 
@@ -25,31 +25,24 @@ class BaseModel:
         initialize instances
         """
 
-        if kwargs == {}:
+        if not kwargs:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
-            FileStorage.new(self)
-            return
-        if 'id' not in kwargs:
-            kwargs['id'] = str(uuid4())
-        self.id = kwargs['id']
-
-        for key, value in kwargs.items():
-            if key == "__class__":
-                continue
-        if "created_at" in kwargs:
-            self.created_at = datetime.strptime(
-                    kwargs['created_at'],
-                    '%Y-%m-%dT%H:%M:%S.%f')
-        if "updated_at" in kwargs:
-            self._updated_at = datetime.strptime(
-                    kwargs['updated_at'],
-                    '%Y-%m-%dT%H:%M:%S.%f')
+            models.storage.new(self)
+        else:
+            for key, value in kwargs.items():
+                if key in ("updated_at", "created_at"):
+                    self.__dict__[key] = datetime.strptime(
+                        value, '%Y-%m-%dT%H:%M:%S.%f')
+                elif key[0] == "id":
+                    self.__dict__[key] = str(value)
+                else:
+                    self.__dict__[key] = value
 
     def __str__(self):
         return "[{}] ({}) <{}>".format(
-                type(self).__name__, self.id, self.__dict)
+                type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         """
