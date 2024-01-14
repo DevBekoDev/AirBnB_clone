@@ -8,12 +8,6 @@ deserializes JSON file to instances
 
 from models.base_model import BaseModel
 import json
-from json.decoder import JSONDecodeError
-from datetime import datetime
-import sys
-import os
-import models
-sys.path.append('/root/AirBnB_clone/')
 
 
 class FileStorage:
@@ -25,7 +19,6 @@ class FileStorage:
 
     __objects = {}
     __file_path = 'file.json'
-
 
     def all(self):
         """
