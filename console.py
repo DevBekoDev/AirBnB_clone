@@ -10,6 +10,7 @@ from models.user import User
 def parse(arg):
     return [i.strip(",") for i in split(arg)]
 
+
 class HBNBCommand(cmd.Cmd):
     """Defines the HolbertonBnB command interpreter.
 
@@ -117,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
         if len(argtemp) == 0:
             print("** class name missing **")
             return False
-        if argtemp[0] not in HBNBCommand.__classes:
+        if argtemp[0] != "BaseModel":
             print("** class doesn't exist **")
             return False
         if len(argtemp) == 1:
@@ -153,6 +154,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     obj.__dict__[k] = v
         storage.save()
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
