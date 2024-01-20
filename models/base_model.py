@@ -7,7 +7,6 @@ from uuid import uuid4
 from datetime import datetime
 import sys
 import models
-from models.engine.file_storage import FileStorage
 sys.path.append('/root/AirBnB_clone/')
 
 
@@ -47,6 +46,7 @@ class BaseModel:
 
         self.updated_at = datetime.utcnow()
         models.storage.save()
+
     def to_dict(self):
         """
         return a dictionary keys and values of __dict__

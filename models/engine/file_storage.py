@@ -6,13 +6,9 @@ deserializes JSON file to instances
 """
 
 
+from models.base_model import BaseModel
 import json
-from json.decoder import JSONDecodeError
-from datetime import datetime
-import sys
-import os
-import models
-sys.path.append('/root/AirBnB_clone/')
+from models.user import User
 
 
 class FileStorage:
@@ -25,47 +21,39 @@ class FileStorage:
     __objects = {}
     __file_path = 'file.json'
 
-    def __init__(self):
-        """
-        constructor
-        """
-        pass
-
     def all(self):
         """
         returns objects stored
         """
 
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """
         sets objects
         """
-        self.__objects[obj.__class__.__name__ + '.' + str(obj)] = obj
+        ocname = obj.__class__.__name__
+        FileStorage.__objects["{}.{}".format(ocname, obj.id)] = obj
 
     def save(self):
         """
         serializes objects and store in json file
         """
+        odict = FileStorage.__objects
+        objdict = {obj: odict[obj].to_dict() for obj in odict.keys()}
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump(objdict, f)
 
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as f:
-            d = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
-            json.dump(d, f)
-    
     def reload(self):
         """
         deserializing json file to objects
         """
-
         try:
-            with open(self.__file_path, 'r') as f:
-                data_dict = json.loads(f.read())
-                for value in data_dict.values():
-                    cls_name = value.get("__class__")
-                    if cls_name:
-                        cls = eval(cls_name)
-                        instance = cls(**value)
-                        self.new(instance)
-        except Exception as e:
-            pass
+            with open(FileStorage.__file_path) as f:
+                objdict = json.load(f)
+                for o in objdict.values():
+                    cls_name = o["__class__"]
+                    del o["__class__"]
+                    self.new(eval(cls_name)(**o))
+        except FileNotFoundError:
+            return
